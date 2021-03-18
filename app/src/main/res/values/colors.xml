@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="shape_progress_dialog">#B2000000</color>
+    <color name="text_color_white">#ffffff</color>
+
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="color_black">#000000</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_transparent">@android:color/transparent</color>
+
+    <color name="transparent">@android:color/transparent</color>
+    <color name="color_race_yellow">#F7EED6</color>
+    <color name="color_bean_green">#83AF9B</color>
+    <color name="color_lovely_pink">#FFAABB</color>
+    <color name="hint_input_bg_color">#E9F0FD</color>
+    <color name="hint_icon_bg_color">#EAECEF</color>
+    <color name="color_tab_bg">#FCFCFC</color>
+    
+    <color name="color_gray_bf">#bfbfbf</color>
+    <color name="color_login">#688ec9</color>
+    <color name="color_blue_dark">#353a3f</color>
+
+</resources>

@@ -1,0 +1,136 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId "com.me.hifimusic"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters "armeabi"
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    repositories {
+        google()
+        jcenter()
+    }
+
+    kotlin {
+        experimental {
+            coroutines 'enable'
+        }
+    }
+
+    kapt {
+        generateStubs = true
+    }
+
+
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api 'androidx.appcompat:appcompat:1.0.2'
+    api 'androidx.core:core-ktx:1.0.2'
+    api 'com.google.android.material:material:1.0.0'
+//    api 'androidx.constraintlayout:constraintlayout:1.1.3'
+    api 'androidx.navigation:navigation-fragment:2.0.0'
+    api 'androidx.navigation:navigation-ui:2.0.0'
+    api 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    api 'androidx.navigation:navigation-fragment-ktx:2.0.0'
+    api 'androidx.navigation:navigation-ui-ktx:2.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+
+    // 第三方
+    //Retrofit相关
+    api(['com.squareup.okhttp3:logging-interceptor:3.9.0',//用于查看http请求时的log
+         'com.squareup.retrofit2:retrofit:2.3.0',
+         'com.squareup.retrofit2:adapter-rxjava2:2.3.0',
+         'com.squareup.retrofit2:converter-gson:2.3.0',
+         'com.squareup.retrofit2:converter-scalars:2.0.0'
+    ])
+
+    //RxJava相关
+    api(['io.reactivex.rxjava2:rxandroid:2.0.1',
+         'io.reactivex.rxjava2:rxkotlin:2.1.0'
+//             'io.reactivex.rxjava2:rxjava:2.1.3'
+    ])//此处可换成'io.reactivex.rxjava2:rxkotlin:2.1.0'
+
+    //RxLifecycle相关
+    api(['com.trello.rxlifecycle2:rxlifecycle-kotlin:2.2.0',
+         'com.trello.rxlifecycle2:rxlifecycle-components:2.2.0'])
+
+    //解析html文档
+    api 'org.jsoup:jsoup:1.13.1'
+
+    //反射类
+    api 'org.jetbrains.kotlin:kotlin-reflect:1.3.50'
+
+    //recyclerView适配器
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
+
+    //glide
+    api 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+
+    // 协程
+//    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3'
+//    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
+
+    // 日志类
+    api 'com.orhanobut:logger:2.2.0'
+
+    // mmkv 数据存储
+//    api 'com.tencent:mmkv-static:1.2.7'
+//    api 'com.tencent:mmkv:1.2.7'
+
+    api 'com.google.code.gson:gson:2.8.5'
+
+    // 播放器
+//    # 必选，内部默认使用系统mediaplayer进行解码
+    implementation 'com.github.dueeeke.dkplayer:dkplayer-java:3.2.6'
+
+//    # 可选，包含StandardVideoController的实现
+    implementation 'com.github.dueeeke.dkplayer:dkplayer-ui:3.2.6'
+
+//    # 可选，使用exoplayer进行解码
+    implementation 'com.github.dueeeke.dkplayer:player-exo:3.2.6'
+
+//    # 可选，使用ijkplayer进行解码
+    implementation 'com.github.dueeeke.dkplayer:player-ijk:3.2.6'
+
+//    # 可选，如需要缓存或者抖音预加载功能请引入此库
+    implementation 'com.github.dueeeke.dkplayer:videocache:3.2.6'
+
+//  MotionLayout
+    api 'com.android.support.constraint:constraint-layout:2.0.0-beta1'
+
+    implementation 'com.arialyy.aria:core:3.8.15'
+    kapt 'com.arialyy.aria:compiler:3.8.15'
+    implementation 'com.arialyy.aria:ftpComponent:3.8.15' // 如果需要使用ftp，请增加该组件
+    implementation 'com.arialyy.aria:sftpComponent:3.8.15' // 如果需要使用ftp，请增加该组件
+    implementation 'com.arialyy.aria:m3u8Component:3.8.15' // 如果需要使用m3u8下载功能，请增加该组件
+
+    implementation 'com.yanzhenjie:permission:2.0.3'
+}

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <include
+        android:id="@+id/searchRl"
+        android:animateLayoutChanges="true"
+        layout="@layout/include_search_layout"/>
+
+    <com.google.android.material.tabs.TabLayout
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/tabLayout"
+        app:layout_constraintTop_toBottomOf="@id/searchRl"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/color_race_yellow"
+        />
+
+    <!-- 当宽和高都设为0dp时，系统将设置最大尺寸满足所有约束并保持设定的长宽比-->
+    <!--    <FrameLayout-->
+    <!--        android:id="@+id/fragment"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/tabLayout"-->
+    <!--        android:background="@color/color_bean_green"-->
+    <!--        />-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+        android:background="@color/color_bean_green"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

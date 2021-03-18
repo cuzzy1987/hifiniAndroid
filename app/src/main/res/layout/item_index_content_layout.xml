@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardCornerRadius="8dp"
+    app:cardBackgroundColor="@color/color_white"
+    android:layout_margin="5dp"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/contentLl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        >
+        <ImageView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="10dp"
+            android:id="@+id/headIv"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@mipmap/ic_launcher"
+            />
+        <TextView
+            app:layout_constraintStart_toEndOf="@+id/headIv"
+            app:layout_constraintTop_toTopOf="@+id/headIv"
+            tools:text="@string/content_placeholder"
+            android:layout_marginStart="20dp"
+            android:id="@+id/topicTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_black"
+            android:textSize="16dp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            />
+
+
+        <TextView
+            android:id="@+id/subTv"
+            app:layout_constraintTop_toBottomOf="@+id/topicTv"
+            app:layout_constraintStart_toEndOf="@+id/headIv"
+            app:layout_constraintStart_toStartOf="@id/topicTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="角标注释文字"
+            android:textSize="14dp"
+            android:layout_marginTop="8dp"
+            />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

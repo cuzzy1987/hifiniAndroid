@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg2"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:collapsedTitleGravity="right"
+            app:contentScrim="@color/color_race_yellow"
+            app:expandedTitleGravity="center"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed|enterAlwaysCollapsed"
+            >
+
+        <include
+            app:layout_scrollFlags="scroll|enterAlways"
+            android:id="@+id/searchRl"
+            android:animateLayoutChanges="true"
+            layout="@layout/include_search_layout"/>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/color_race_yellow"
+            />
+    </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            />
+
+<!--                android:background="@color/color_bean_green"
+-->
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
