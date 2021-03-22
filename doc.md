@@ -31,3 +31,6 @@ RecyclerView缓存机制[https://juejin.cn/post/6935605122567241742]
 
 
 开源播放器[https://github.com/Doikki/DKVideoPlayer/wiki#%E7%89%B9%E6%80%A7]
+
+
+自定义UI[https://www.jianshu.com/p/a8850bae0c66?utm_source=oschina-app]

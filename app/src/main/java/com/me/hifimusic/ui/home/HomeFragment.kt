@@ -17,6 +17,7 @@ import com.me.hifimusic.R
 import com.me.hifimusic.adapter.IndexContentAdapter
 import com.me.hifimusic.base.BaseActivity
 import com.me.hifimusic.base.BaseFragment
+import com.me.hifimusic.bean.HotAuthor
 import com.me.hifimusic.bean.IndexContentItemBean
 import com.me.hifimusic.bean.NavBean
 import com.me.hifimusic.ui.search.SearchActivity
@@ -24,12 +25,16 @@ import com.me.hifimusic.ui.WebActivity
 import com.me.hifimusic.ui.login.LoginActivity
 import com.me.hifimusic.ui.player.PlayerActivity
 import com.me.hifimusic.util.GlideUtils
+import com.me.hifimusic.util.VibrateUtils
+import com.me.hifimusic.widget.DashboardView
+import kotlinx.android.synthetic.main.activity_player.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.include_search_layout.*
+import kotlinx.android.synthetic.main.include_search_layout.dashboardView
 
 class HomeFragment : BaseFragment() {
 
-    val TAG: String = "HomeFragment"
+    private val TAG: String = "HomeFragment"
     lateinit var mAdapter: IndexContentAdapter
     private lateinit var homeViewModel: HomeViewModel
 
@@ -51,7 +56,6 @@ class HomeFragment : BaseFragment() {
             ViewModelProviders.of(this).get(HomeViewModel::class.java)
         initView()
         initData()
-        initSearch()
         initLogin()
         initTest()
     }
@@ -66,17 +70,12 @@ class HomeFragment : BaseFragment() {
         }
     }
 
-    private fun initSearch() {
-        searchContentRl.setOnClickListener { SearchActivity.startActivity(context!!) }
-    }
 
     private fun initData() {
         mAdapter = IndexContentAdapter(R.layout.item_index_content_layout)
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         recyclerView.adapter = mAdapter
         if(context != null)homeViewModel.getData(activity as Context)
-
-
     }
 
     private fun initView() {
@@ -86,31 +85,59 @@ class HomeFragment : BaseFragment() {
         homeViewModel.items.observe(this, Observer {
             initItems(homeViewModel.items)
         })
+
+        homeViewModel.dashBoard.observe(this, Observer {
+            initDashboard(homeViewModel.dashBoard)
+        })
+
+    }
+
+    private fun initDashboard(dashboards: MutableLiveData<MutableList<HotAuthor>>) {
+        val authors = dashboards.value
+        if (authors !=null ){
+            val array = arrayOfNulls<String>(authors.size)
+            repeat(authors.size) {
+                array[it] = authors[it].name
+            }
+
+            Log.e(TAG,"text arr=> $array")
+            dashboardView.setTextArray(array)
+            dashboardView.setOnItemClickListener(object: DashboardView.OnItemClickListener{
+                override fun onItemClick(position: Int) {
+                    Log.e("bobobobobob","position_$position")
+                    SearchActivity.startActivity(context!!,authors[position].name,authors[position].id)
+                }
+
+            })
+        }
     }
 
     private fun initItems(items: MutableLiveData<MutableList<IndexContentItemBean>>) {
         // 处理item事件
         Log.e(TAG,"item size=> ${items.value!!.size}")
+        
         if (items.value != null){
             mAdapter.data = items.value!!
             mAdapter.notifyDataSetChanged()
         }
+        
         mAdapter.setOnItemClickListener { adapter, _, position ->
             val url = (adapter.data[position] as IndexContentItemBean).link
             Log.e(TAG,"url=$url")
             WebActivity.startActivity(this.context!!,url!!)
             //            PlayerActivity.startActivity(this.context!!,"")
-
         }
 
 
         mAdapter.setOnItemLongClickListener{
-            adapter, view, position ->
-            (activity as BaseActivity).showToast("长安点赞三连",Toast.LENGTH_LONG)
+            adapter, _, position ->
+            VibrateUtils.longClickVibrate(context!!)
+//            (activity as BaseActivity).showToast("长安点赞三连",Toast.LENGTH_LONG)
             val id = (adapter.data[position] as IndexContentItemBean).link
             PlayerActivity.startActivity(this.context!!,id!!)
             true
         }
+        
     }
 
     private fun initTabs(tabs: MutableLiveData<MutableList<NavBean>>) {

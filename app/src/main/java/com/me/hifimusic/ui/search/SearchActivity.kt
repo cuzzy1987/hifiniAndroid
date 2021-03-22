@@ -30,9 +30,16 @@ class SearchActivity : BaseActivity() {
         fun startActivity(context: Context){
             context.startActivity(Intent(context, SearchActivity::class.java))
         }
+
+        fun startActivity(context: Context,name: String,id: String){
+            val intent = Intent(context,SearchActivity::class.java)
+            intent.putExtra("name",name)
+            intent.putExtra("id",id)
+            context.startActivity(intent)
+        }
     }
 
-    val TAG: String = SearchActivity::class.java.name
+    private val TAG: String = SearchActivity::class.java.name
     lateinit var searchViewModel: SearchViewModel
     lateinit var mAdapter: IndexContentAdapter
 
@@ -49,6 +56,13 @@ class SearchActivity : BaseActivity() {
         searchViewModel.items.observe(this, Observer {
             initItems(searchViewModel.items)
         })
+
+        val name = intent.getStringExtra("name")
+        Log.e(TAG, "name=> $name")
+        name?.let {
+            searchViewModel.getSearchData(this,name.toString(),page.toString())
+            contentEt.hint = name
+        }
     }
 
     private fun initItems(items: MutableLiveData<MutableList<IndexContentItemBean>>) {
@@ -58,14 +72,14 @@ class SearchActivity : BaseActivity() {
             mAdapter.notifyDataSetChanged()
         }
 
-        mAdapter.setOnItemClickListener(OnItemClickListener { adapter, view, position ->
+        mAdapter.setOnItemClickListener {adapter, view, position ->
             var url = (adapter.data[position] as IndexContentItemBean).link
             HFLog.e(TAG,"url=$url")
             WebActivity.startActivity(this,url!!)
-        })
+        }
 
         mAdapter.setOnItemLongClickListener{
-                adapter, view, position ->
+                adapter, _, position ->
             val id = (adapter.data[position] as IndexContentItemBean).link
             PlayerActivity.startActivity(this,id!!)
             true
@@ -74,13 +88,9 @@ class SearchActivity : BaseActivity() {
 
     private fun initView() {
         this.window.statusBarColor = resources.getColor(R.color.color_race_yellow)
-//        contentEt.
-        contentEt.requestFocus()
+//        contentEt.requestFocus()
         mAdapter = IndexContentAdapter(R.layout.item_index_content_layout)
         initRecyclerView()
-
-//        contentEt.setOnClickListener {
-//        }
 
         contentEt.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
             if (hasFocus){
@@ -90,7 +100,7 @@ class SearchActivity : BaseActivity() {
             }
         }
 
-        contentEt.setOnEditorActionListener { v, actionId, event ->
+        contentEt.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE){
                 searchViewModel.getSearchData(this,contentEt.text.toString(),page.toString())
                 false

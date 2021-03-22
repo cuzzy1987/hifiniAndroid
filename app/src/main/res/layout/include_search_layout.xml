@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/color_race_yellow"
-    android:id="@+id/searchRl"
-    >
+    android:id="@+id/searchRl">
 
 <!--    <TextView-->
 <!--        android:id="@+id/loginTv"-->
@@ -39,11 +38,26 @@
         android:layout_marginBottom="@dimen/dp_6"
         >
         <ImageView
+            android:id="@+id/searchIv"
             android:layout_width="@dimen/dp_25"
             android:layout_height="@dimen/dp_25"
             android:src="@mipmap/search"
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
+            />
+        <com.me.hifimusic.widget.DashboardView
+            android:layout_toEndOf="@+id/searchIv"
+            android:layout_marginTop="@dimen/dp_20"
+            android:id="@+id/dashboardView"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            app:textSize="@dimen/dp_16"
+            app:textColor="@android:color/darker_gray"
+            app:paddingLeft="@dimen/dp_10"
+            app:startDelayTime="500"
+            app:reRepeatDelayTime="3000"
+            app:itemAnimationTime="700"
             />
     </RelativeLayout>
 </RelativeLayout>

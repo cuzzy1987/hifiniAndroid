@@ -3,6 +3,8 @@ package com.me.hifimusic.ui.player
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.lifecycle.ViewModelProviders
 import com.arialyy.annotations.Download
@@ -12,9 +14,12 @@ import kotlinx.android.synthetic.main.activity_player.*
 import com.dueeeke.videocontroller.StandardVideoController
 import com.me.hifimusic.R
 import com.me.hifimusic.base.BaseActivity
+import com.me.hifimusic.widget.DashboardView
 import com.yanzhenjie.permission.AndPermission
 import com.yanzhenjie.permission.runtime.Permission
 import java.io.File
+
+
 
 
 
@@ -34,6 +39,7 @@ class PlayerActivity : BaseActivity(){
 //    }
 
 
+    private lateinit var handler: Handler
 
     private var url: String = "https://ws.stream.qqmusic.qq.com/C400004SYnFK4AN85O.m4a?guid=9527&vkey=3C92CD433C714733FD263AE7D337E6E2D432CE28CA4CF15614ADDC70B9E0CA54AE2EFE556AA51F80B3E69465365A3E9EC40B4873B2B00F67&uin=7983&fromtag=86"
 
@@ -72,6 +78,8 @@ class PlayerActivity : BaseActivity(){
     }
 
     private fun initData() {
+        handler = Handler()
+
 //        url = "https://hifini.com/get_music.php?key=krwz9AtNAUE204o5cYpdj8DDuLn7UzSoj8MuFpA9bfsN1NGvRWxrpgjWKXrMCOnuSMrqF8A3O/X1uvg60VDJYGU"
         viewModel = ViewModelProviders.of(this).get(PlayerViewModel::class.java)
         val id = intent.getStringExtra("id")
@@ -85,7 +93,21 @@ class PlayerActivity : BaseActivity(){
     private fun initView() {
 
         initPlayer()
-        initDownload()
+//        initDownload()
+        initDashboardView()
+    }
+
+    private fun initDashboardView() {
+//        var array = arrayOf<String>("1111111","222222","33333","4444444","55555555")
+////        var array = arrayOf<String>()
+//
+//        dashboardView.setTextArray(array)
+//        dashboardView.setOnItemClickListener(object: DashboardView.OnItemClickListener{
+//            override fun onItemClick(position: Int) {
+//                Log.e("bobobobobob","position_$position")
+//            }
+//
+//        })
     }
 
     private fun initDownload() {
@@ -130,5 +152,16 @@ class PlayerActivity : BaseActivity(){
 //        player.start() //开始播放，不调用则不自动播放
     }
 
+
+
+    override fun onResume() {
+        super.onResume()
+//        handler.postDelayed( { dashboardView.resume() }, 1000)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+//        dashboardView.destory()
+    }
 
 }

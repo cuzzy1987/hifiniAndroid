@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.me.hifimusic.base.NetworkScheduler
+import com.me.hifimusic.bean.HotAuthor
 import com.me.hifimusic.bean.IndexContentItemBean
 import com.me.hifimusic.bean.NavBean
 import com.me.hifimusic.net.base.ApiResponse
@@ -27,6 +28,9 @@ class HomeViewModel : ViewModel() {
 
     val TAG: String = HomeViewModel::class.java.name
     var mTab: MutableList<NavBean> = mutableListOf()
+    val dashBoard = MutableLiveData<MutableList<HotAuthor>>().apply {
+
+    }
 
     val tabs = MutableLiveData<MutableList<NavBean>>().apply {
         Log.e(TAG,"on apply ")
@@ -77,43 +81,12 @@ class HomeViewModel : ViewModel() {
                         mTab.add(bean)
                         tabs.postValue(mTab)
                     }
-//                    tabs.postValue(mTab)
-//                    initTabLayout(mTab)
-
-
-//                    var scripts = body.select("script")
-//                    Log.d(TAG,"size=> "+scripts.size)
-//                    var navSource = ArrayList<String>()
-//                    loop@ for (i in 0 until scripts.size){
-//                        Log.d(TAG,scripts[i].data())
-//                        if (scripts[i].data().contains("var forumarr =")){
-//                            Log.d(TAG,"index=$i")
-//                            break@loop
-//                        }
-//
-//                        /*var scriptStr = scripts[i].data().toString()
-//                        Log.d(TAG,"scriptStr$scriptStr")
-//                        var varList = scriptStr.split("var")
-//                        loop@ for (i in varList.indices){
-//                            if (varList[i].contains("forumarr")){
-//                                Log.d(TAG,"varList ${i}item= $varList[i]")
-//                                break@loop
-//                            }
-//                        }
-//                        break@loop*/
-//                    }
 
                         initItemsData(body)
                     }catch (e: Exception){
                         Log.e(TAG,"has error=> ${e.toString()}")
                     }
 
-//                    var data = mutableListOf<IndexContentItemBean>()
-//                    loop@ for(i in 0 until 20){
-//                        var itemBean = IndexContentItemBean("name$i","id$i","")
-//                        data.add(itemBean)
-//                    }
-//                    items.postValue(data)
                 }
 
             })
@@ -130,21 +103,24 @@ class HomeViewModel : ViewModel() {
             ----div class=media-body
 
          */
-        var cardBody: Element? = body?.getElementById("body")?.getElementsByClass("container")?.get(0)?.getElementsByClass("row")?.get(0)?.getElementsByClass("col-lg-9 main")?.get(0)?.getElementsByClass("card card-threadlist ")?.get(0)?.getElementsByClass("card-body")?.get(0)?.getElementsByClass("list-unstyled threadlist mb-0")?.get(0)
+        val container: Element? = body?.getElementById("body")?.getElementsByClass("container")?.get(0)
+        val row = container?.getElementsByClass("row")?.get(0)
+        Log.e(TAG,"row=> $row")
+        val cardBody: Element? = row?.getElementsByClass("col-lg-9 main")?.get(0)?.getElementsByClass("card card-threadlist ")?.get(0)?.getElementsByClass("card-body")?.get(0)?.getElementsByClass("list-unstyled threadlist mb-0")?.get(0)
         Log.e(TAG,"cardBody=> $cardBody")
-        var itemDiv = cardBody?.getElementsByClass("media-body")
+        val itemDiv = cardBody?.getElementsByClass("media-body")
         Log.e(TAG,"item length${itemDiv?.size}items=> $itemDiv")
 
 
-        var contentBeans = mutableListOf<IndexContentItemBean>()
+        val contentBeans = mutableListOf<IndexContentItemBean>()
         if (itemDiv != null)
         loop@ for (i in 0 until itemDiv.size){
-            var itemA = itemDiv[i].getElementsByClass("subject break-all")[0].select("a").first()
-            var link = itemA.attr("href")
+            val itemA = itemDiv[i].getElementsByClass("subject break-all")[0].select("a").first()
+            val link = itemA.attr("href")
             var name = itemA.select("span")?.first()?.text()
-            var authorElement = cardBody?.getElementsByClass("ml-1 mt-1 mr-3")?.get(i)
-            var authorLink = authorElement?.attr("href")
-            var authorImage = authorElement?.getElementsByTag("img")?.first()?.attr("src")
+            val authorElement = cardBody?.getElementsByClass("ml-1 mt-1 mr-3")?.get(i)
+            val authorLink = authorElement?.attr("href")
+            val authorImage = authorElement?.getElementsByTag("img")?.first()?.attr("src")
 
             if (TextUtils.isEmpty(name)){
                 name = itemA.text()
@@ -153,12 +129,48 @@ class HomeViewModel : ViewModel() {
             Log.e(TAG,"real items = ${item.toString()}")
 
             contentBeans.add(item)
-            // 循环获取数据
-//            var img = itemDiv[i].selectFirst("avatar-3").data()
-//            var content = itemDiv[i].selectFirst("span").data()
-//            Log.e(TAG,"item img${img} content${content}")
+
         }
+
+        initHotAuthor(row)
+
         items.postValue(contentBeans)
+    }
+
+    private fun initHotAuthor(row: Element?) {
+        Log.e(TAG,"row initHotAuthor => $row")
+        var hotList = mutableListOf<HotAuthor>()
+
+        var cardDiv = row?.getElementsByClass("col-lg-3 d-none d-lg-block aside")?.first()
+        Log.e(TAG,"cardDiv_$cardDiv")
+
+
+        // select通过class查找某一标签
+        var tagDiv = row?.select("div[class=card]")?.first()
+
+        Log.e(TAG, "tagDiv=> $tagDiv")
+
+//        var asideElement = cardDiv?.getElementsByClass("card")?.first()
+//        Log.e(TAG,"aside_$asideElement")
+        var hotDiv = tagDiv?.getElementById("taghot")
+        Log.e(TAG,"hotDiv_$hotDiv")
+        var hotElements = hotDiv?.select("ul")?.first()
+            ?.select("li")
+
+        Log.e(TAG,"hotElements\n$hotElements")
+        hotElements?.let {
+            loop@ for (i in 0 until hotElements.size){
+                var liElement = hotElements.select("li")[i]
+                var aElement = liElement.select("a")?.first()
+                var name = aElement?.text()
+                var id = aElement?.attr("href")
+                var hotAuthor = HotAuthor(name!!,id!!)
+                hotList.add(hotAuthor)
+                Log.e(TAG,"item=> $hotAuthor")
+            }
+        }
+
+        dashBoard.postValue(hotList)
     }
 
 
@@ -185,9 +197,5 @@ class HomeViewModel : ViewModel() {
         return text
     }
 
-    // 登录接口
-    fun login() {
-        1
-    }
 
 }

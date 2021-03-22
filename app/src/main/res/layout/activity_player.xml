@@ -15,4 +15,22 @@
         android:layout_height="300dp"
         />
 
+<!--    <com.me.hifimusic.widget.DashboardView-->
+<!--        android:layout_marginTop="@dimen/dp_20"-->
+<!--        android:id="@+id/dashboardView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/player"-->
+<!--        android:layout_centerInParent="true"-->
+<!--        android:background="#FFAABB"-->
+<!--        app:textSize="16sp"-->
+<!--        app:textColor="#333333"-->
+<!--        app:paddingLeft="10dp"-->
+<!--        app:paddingTopBottom="15dp"-->
+<!--        app:startDelayTime="500"-->
+<!--        app:reRepeatDelayTime="1000"-->
+<!--        app:itemAnimationTime="700"-->
+<!--        />-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

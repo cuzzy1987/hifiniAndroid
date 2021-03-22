@@ -36,6 +36,7 @@ class SearchViewModel: ViewModel(){
 
     fun getSearchData(context: Context,keywords: String,page: String){
 
+        Log.e(TAG,"keywords=> ${keywords}__page=> $page")
         Network.instance.api.searchResults(keywords,page)
             .compose(NetworkScheduler.compose())
             .subscribe(object :ApiResponse<String>(context){
