@@ -104,7 +104,6 @@ class HomeFragment : BaseFragment() {
             dashboardView.setTextArray(array)
             dashboardView.setOnItemClickListener(object: DashboardView.OnItemClickListener{
                 override fun onItemClick(position: Int) {
-                    Log.e("bobobobobob","position_$position")
                     SearchActivity.startActivity(context!!,authors[position].name,authors[position].id)
                 }
 
